@@ -25,7 +25,7 @@ Next, start the environment:
 cd evaluator
 vagrant up
 ```
-The system will create an provision a development environment with Oracle Java8, MySQL, and Ignition 7.9.1 preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
+The system will create an provision an Ubuntu 16.04 development environment with Oracle Java8, MySQL, and Ignition 7.9.1 preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
 
 http://localhost:8088
 

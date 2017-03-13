@@ -4,6 +4,7 @@ This provides a simple set of exercises under the [Ignition](http://www.inductiv
 ## Prerequisites
 
 * VirtualBox
+  * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Downgrade to 5.1.14 for better operation.  VirtualBox[^1] and Vagrant[^2] are both tracking issues.
 * Vagrant
 
 ## Getting Started
@@ -17,6 +18,10 @@ You also need to have VirtualBox installed as the VM provider.  Get VirtualBox h
 https://www.virtualbox.org/wiki/Downloads
 
 ### Windows
+
+If you don't have a `git` client, install *Git for Windows* and get not only `git` but also `ssh` (and more):
+
+https://git-for-windows.github.io
 
 First, download the repository to your computer (if you have `git` installed, you can clone as well):
 
@@ -64,3 +69,7 @@ vagrant halt
 
 This will shutdown the virtual machine and release the network port configuration that was setup on launch.
 
+
+
+[^1]: VirtualBox 5.1.16 Regression: https://www.virtualbox.org/ticket/14651
+[^2]: Vagrant Shared Folder / Extended Path Issue: https://github.com/mitchellh/vagrant/issues/8352

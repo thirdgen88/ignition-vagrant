@@ -30,6 +30,7 @@ The Gateway status page should now reflect the new database connection and simul
 In order to make sure we can view some trended data from our simulated devices in our project, lets also setup our history connections:
 
 1. From the *Gateway Config Page*, configure a new Alarm Journal profile called `Journal` against our `ignition` database we created in the last section.
+
 2. Also create an Audit Profile called `Audit` within the `ignition` database as well.  Adjust the table name to be the lowercase `audit_events` for consistency with other Ignition default table names.
 
 ## Creating an Application
@@ -37,6 +38,7 @@ In order to make sure we can view some trended data from our simulated devices i
 Next, we're going to create a baseline application to house our visualization and tag definitions:
 
 1. Use the *Launch Designer* link on the *Gateway Web Page* to open the Designer.
+
 2. Create a project called `Evaluator` using one of the *Single-Tier* navigation templates that will provide us with menuing and navigation preconfigured.
 
 Lets perform some customizations and prepare a new window for our evaluation:

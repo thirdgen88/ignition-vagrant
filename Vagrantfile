@@ -20,10 +20,13 @@ echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-
 echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections
 sudo apt-get install -y -q oracle-java8-installer >> install.log
 # Setup MySQL Setup and install mysql-server
-echo "Installing MySQL with Root Password 'ignitionsql'"
+echo "Installing MySQL"
 echo "mysql-server mysql-server/root_password select ignitionsql" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again select ignitionsql" | sudo debconf-set-selections
 sudo apt-get install -y -q mysql-server >> install.log
+# Setup MySQL Username
+echo "Setting up 'ignition' database with 'ignition' user and password 'ignition'"
+mysql -u root --password=ignitionsql -e "CREATE USER 'ignition'@'localhost' IDENTIFIED BY 'ignition'; CREATE DATABASE ignition; GRANT ALL PRIVILEGES ON ignition.* to 'ignition'@'localhost';" >> install.log
 # Download Ignition and install
 echo "Downloading Ignition 7.9.1"
 wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.1/20170125-1117/Ignition-7.9.1-linux-x64-installer.run >> install.log

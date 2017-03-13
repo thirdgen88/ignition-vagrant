@@ -71,5 +71,7 @@ This will shutdown the virtual machine and release the network port configuratio
 
 
 
+
 [^1]: VirtualBox 5.1.16 Regression: https://www.virtualbox.org/ticket/14651
+
 [^2]: Vagrant Shared Folder / Extended Path Issue: https://github.com/mitchellh/vagrant/issues/8352

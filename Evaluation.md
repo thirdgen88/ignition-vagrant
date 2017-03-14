@@ -21,7 +21,7 @@ Before we actually dive into the creation of a GUI application, we'll get some p
 1. Create/Configure a database connection called `ignition`.  The connection should use MySQL against the `ignition` database with username `ignition` and password `ignition`.
 2. Create/Configure two *Generic Simulator* devices, one named `Device1`, another named `Device2`.
 
-The Gateway status page should now reflect the new database connection and simulated devices:
+The *Gateway Status Page* should now reflect the new database connection and simulated devices:
 
 ![Database and Devices Created](images/database_and_devices_created.png)
 

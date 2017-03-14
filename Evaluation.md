@@ -58,9 +58,15 @@ Lets setup some framework elements for our evaluation:
 We need some tags in order to drive our displays, so lets create some:
 
 1. Bring up the OPC Browser against the internal `Ignition OPC-UA Server`.  Add the entire `Devices` folder to the tags in the default provider for the project by just dragging the folder onto the `Tags` folder in the *Tag Browser*.
+
+   > The bolded *Tags* folder in the *Tag Browser* represents the tag provider that has been configured as *Default* for this project.  You can see all of the providers (including the project default) in the *All Providers* folder.
+
 2. Adjust the `Default Historical` scan class to utilize a faster *Slow Rate* of `1000`ms so our history capture will be a little speedier.
+
 3. Enable History on the `Realistic/Realistic0` and `Writable/WriteableDouble1` tags for both `Device1` and `Device2`. 
+
 4. Modify the metadata on `Writeable/WriteableDouble1` on each device to allow for Engineering Units range from `-100` to `100`.
+
 5. Enable a `Hi Alarm` on `Realistic/Realistic0` that activates when its value exceeds `15` for `Device1` and `20` for `Device2`
 
 Now that we have some data, lets get started with our `Demo` window:

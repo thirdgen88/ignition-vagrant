@@ -25,7 +25,7 @@ https://git-for-windows.github.io
 
 First, download the repository to your computer (if you have `git` installed, you can clone as well):
 
-![Download from Github](images/Download from Github.png)
+![Download from Github]("images/Download from Github.png")
 
 Unpack the downloaded zip file, open a command prompt to the resulting location, and run `vagrant up`:
 

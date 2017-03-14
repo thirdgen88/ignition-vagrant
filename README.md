@@ -55,9 +55,9 @@ If you see an Ignition Gateway Webpage, you're ready to go:
 
 ![Ignition Home Page](images/Ignition Home Page.png)
 
-## Loading the evaluation gateway
+## Performing the evaluation
 
-TODO: Integrate the gateway into the installation
+With your development environment online and ready, proceed to the [Evaluation](Evaluation.md) section for more instructions!
 
 ## Shutting down the environment
 

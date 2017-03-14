@@ -41,22 +41,18 @@ Next, we're going to create a baseline application to house our visualization an
 2. Create a project called `Evaluator` using one of the *Single-Tier* navigation templates that will provide us with menuing and navigation preconfigured.
 3. Adjust the project properties to utilize *Anchored* mode as the default component layout methodology.
 
-Lets perform some customizations and prepare a new window for our evaluation:
+Lets setup some framework elements for our evaluation:
 
-1. Create a new *Main Window* in the `Main Windows` folder called `Demo`.
+1. Open the `Navigation` window from the *Project Browser*.
 
-2. Open the `Navigation` window from the *Project Browser*.
-
-3. Remove the Ignition logo element and replace with the Evaluator Logo image:
+2. Remove the Ignition logo element and replace with the Evaluator Logo image:
    ![Evaluator Logo](images/evaluator_logo.png)
 
-   > Probably should utilize *Anchored* layout on your new image element so that it always will show up on the left-hand side of the menu!
-
-4. Use the *Tab Strip Customizer* on the `Tabs` element to add a new tab called `Demo` for window we created above.
+3. Use the *Tab Strip Customizer* on the `Tabs` element to add a new tab called `Demo` for window we created above.
 
    > It should be placed in between the `Overview` and `User Management` tabs
 
-5. Save and close the `Navigation` window.
+4. Save and close the `Navigation` window.
 
 
 We need some tags in order to drive our displays, so lets create some:
@@ -69,33 +65,35 @@ We need some tags in order to drive our displays, so lets create some:
 
 Now that we have some data, lets get started with our `Demo` window:
 
-1. Open the `Demo` window and add an *Easy Chart* component to the screen.  
+1. Create a new *Main Window* in the `Main Windows` folder called `Demo`.
 
-2. Configure the *Easy Chart* you created to have 2 subplots.  One of the subplots should have the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1`, the other subplot should have the same tags from `Device2`.
+2. Add an *Easy Chart* component to the screen.  
+
+3. Configure the *Easy Chart* you created to have 2 subplots.  One of the subplots should have the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1`, the other subplot should have the same tags from `Device2`.
 
    > Use a dark gray line for the `Realistic/Realistic0` values and a colored line (of your choosing) for the `Writeable/WriteableDouble1` tags.
    >
    > While you can edit the datasets of the *Easy Chart* manually, feel free to use the *Easy Chart Customizer* feature to make these additions.
 
-3. Also configure the *Easy Chart* to utilize *Realtime* mode.  Disable *Pen Control?* to hide the configured pens listing.
+4. Also configure the *Easy Chart* to utilize *Realtime* mode.  Disable *Pen Control?* to hide the configured pens listing.
 
-4. Let's also add *Numeric Label* components so we can visualize the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1` and `Device2`.  Name the components and lay them out in a reasonable manner of your choosing.
+5. Let's also add *Numeric Label* components so we can visualize the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1` and `Device2`.  Name the components and lay them out in a reasonable manner of your choosing.
 
-5. Modify the *Numeric Label* components you created to have the *Background Color* change to orange when the `AlertActive` property is true on `Realistic/Realistic0` (for each respective device). 
+6. Modify the *Numeric Label* components you created to have the *Background Color* change to orange when the `AlertActive` property is true on `Realistic/Realistic0` (for each respective device). 
 
-6. For the benefit of our users, lets also add some *Label* components to provide a description to the left of those *Numeric Label* components we added above.  Set the label contents accordingly.
+7. For the benefit of our users, lets also add some *Label* components to provide a description to the left of those *Numeric Label* components we added above.  Set the label contents accordingly.
 
    > You can also leverage *Container* components to group other components together.  Try experimenting with the border styles of the *Container* components to add decorative groupings to your application!
 
-7. Finally, add a button (for each of the value pairs we created above) that will set the `Writeable/WriteableDouble1` tag with the value of `Realistic/Realistic0` from each device.  Set the button text to indicate that it will snapshot the associated device.
+8. Finally, add a button (for each of the value pairs we created above) that will set the `Writeable/WriteableDouble1` tag with the value of `Realistic/Realistic0` from each device.  Set the button text to indicate that it will snapshot the associated device.
 
    > Once you configure the button for the *Set Tag Value* action, take a look at the *Script Editor* tab to see what it created.  You might see if you can leverage the `system.tag.read()` function to read the value directly from the tag instead of from a property.
 
-8. Work with the layout features of the components you've created to make this window function properly on any size screen.  Consult the the documentation here for more information on layout: [Component Layout](https://docs.inductiveautomation.com:8443/display/DOC79/Working+with+Components#WorkingwithComponents-ComponentLayout)
+9. Work with the layout features of the components you've created to make this window function properly on any size screen.  Consult the the documentation here for more information on layout: [Component Layout](https://docs.inductiveautomation.com:8443/display/DOC79/Working+with+Components#WorkingwithComponents-ComponentLayout)
 
-9. Save and close your `Demo` window.  
+10. Save and close your `Demo` window.  
 
-10. Save and Publish the application.  Then try previewing the project via the Designer's *Tools->Launch Project* menu.
+11. Save and Publish the application.  Then try previewing the project via the Designer's *Tools->Launch Project* menu.
 
 Once complete, you should have a window that will allow viewing some of the simulated values as well as the snapshot values (which should change when you click the snapshot button you created).
 

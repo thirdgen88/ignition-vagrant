@@ -65,6 +65,8 @@ We need some tags in order to drive our displays, so lets create some:
 
 3. Enable History on the `Realistic/Realistic0` and `Writable/WriteableDouble1` tags for both `Device1` and `Device2`. 
 
+   > Don't forget to set the history provider!
+
 4. Modify the metadata on `Writeable/WriteableDouble1` on each device to allow for Engineering Units range from `-100` to `100`.
 
 5. Enable a `Hi Alarm` on `Realistic/Realistic0` that activates when its value exceeds `15` for `Device1` and `20` for `Device2`

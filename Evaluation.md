@@ -23,7 +23,7 @@ Before we actually dive into the creation of a GUI application, we'll get some p
 
 The Gateway status page should now reflect the new database connection and simulated devices:
 
-![Database and Devices Created](images/Database and Devices Created.png)
+![Database and Devices Created](images/database_and_devices_created.png)
 
 ## Setting up Alarm Journaling and Project Auditing
 
@@ -48,7 +48,7 @@ Lets perform some customizations and prepare a new window for our evaluation:
 2. Open the `Navigation` window from the *Project Browser*.
 
 3. Remove the Ignition logo element and replace with the Evaluator Logo image:
-   ![Evaluator Logo](images/Evaluator Logo.png)
+   ![Evaluator Logo](images/evaluator_logo.png)
 
    > Probably should utilize *Anchored* layout on your new image element so that it always will show up on the left-hand side of the menu!
 

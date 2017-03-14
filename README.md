@@ -25,11 +25,11 @@ https://git-for-windows.github.io
 
 First, download the repository to your computer (if you have `git` installed, you can clone as well):
 
-![Download from Github]("images/Download from Github.png")
+![Download from Github](images/download_from_github.png)
 
 Unpack the downloaded zip file, open a command prompt to the resulting location, and run `vagrant up`:
 
-![Launching Vagrant](images/Launching Vagrant.png)
+![Launching Vagrant](images/launching_vagrant.png)
 
 ### Linux / macOS
 
@@ -53,7 +53,7 @@ http://localhost:8088
 
 If you see an Ignition Gateway Webpage, you're ready to go:
 
-![Ignition Home Page](images/Ignition Home Page.png)
+![Ignition Home Page](images/ignition_home_page.png)
 
 ## Performing the evaluation
 

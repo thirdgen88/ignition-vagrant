@@ -48,7 +48,7 @@ Lets setup some framework elements for our evaluation:
 2. Remove the Ignition logo element and replace with the Evaluator Logo image:
    ![Evaluator Logo](images/evaluator_logo.png)
 
-3. Use the *Tab Strip Customizer* on the `Tabs` element to add a new tab called `Demo` for window we created above.
+3. Use the *Tab Strip Customizer* on the `Tabs` component to add a new tab called `Demo` for window we created above.
 
    > It should be placed in between the `Overview` and `User Management` tabs
 

@@ -13,9 +13,9 @@ We're using [Vagrant](http://www.vagrantup.com) to handle the deployment of the 
 
 https://www.vagrantup.com/downloads.html
 
-You also need to have VirtualBox installed as the VM provider.  Get VirtualBox here:
+You also need to have VirtualBox installed as the VM provider.  Get VirtualBox 5.1.14 here:
 
-https://www.virtualbox.org/wiki/Downloads
+https://www.virtualbox.org/wiki/Download_Old_Builds_5_1
 
 ### Windows
 

@@ -77,7 +77,7 @@ Now that we have some data, lets get started with our `Demo` window:
 
 2. Add an *Easy Chart* component to the screen.  
 
-3. Configure the *Easy Chart* you created to have 2 subplots.  One of the subplots should have the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1`, the other subplot should have the same tags from `Device2`.
+3. Configure the *Easy Chart* you created to have 2 subplots.  One of the subplots should have pens for the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1`, the other subplot should have the same from `Device2`.
 
    > Use a dark gray line for the `Realistic/Realistic0` values and a colored line (of your choosing) for the `Writeable/WriteableDouble1` tags.
    >
@@ -85,11 +85,11 @@ Now that we have some data, lets get started with our `Demo` window:
 
 4. Also configure the *Easy Chart* to utilize *Realtime* mode.  Disable *Pen Control?* to hide the configured pens listing.
 
-5. Let's also add *Numeric Label* components so we can visualize the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1` and `Device2`.  Name the components and lay them out in a reasonable manner of your choosing.
+5. Let's also add *Numeric Label* components so we can visualize the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags from `Device1` and `Device2`.  Name the components and lay them out in a reasonable manner of your choosing.  
 
 6. Modify the *Numeric Label* components you created to have the *Background Color* change to orange when the `AlertActive` property is true on `Realistic/Realistic0` (for each respective device). 
 
-7. For the benefit of our users, lets also add some *Label* components to provide a description to the left of those *Numeric Label* components we added above.  Set the label contents accordingly.
+7. For the benefit of our users, lets also add some *Label* components to provide a description to the left of those *Numeric Label* components we added above.  Set the text on the labels to `Value` and `Snapshot` for the `Realistic/Realistic0` and `Writeable/WriteableDouble1` tags, respectively.
 
    > You can also leverage *Container* components to group other components together.  Try experimenting with the border styles of the *Container* components to add decorative groupings to your application!
 
@@ -97,13 +97,21 @@ Now that we have some data, lets get started with our `Demo` window:
 
    > Once you configure the button for the *Set Tag Value* action, take a look at the *Script Editor* tab to see what it created.  You might see if you can leverage the `system.tag.read()` function to read the value directly from the tag instead of from a property.
 
-9. Work with the layout features of the components you've created to make this window function properly on any size screen.  Consult the the documentation here for more information on layout: [Component Layout](https://docs.inductiveautomation.com:8443/display/DOC79/Working+with+Components#WorkingwithComponents-ComponentLayout)
+9. Work with the layout features of the components you've created to make this window function properly on any size screen (prioritize giving the most real estate to the trend).  Consult the the documentation here for more information on layout: [Component Layout](https://docs.inductiveautomation.com:8443/display/DOC79/Working+with+Components#WorkingwithComponents-ComponentLayout)
 
 10. Save and close your `Demo` window.  
 
 11. Save and Publish the application.  Then try previewing the project via the Designer's *Tools->Launch Project* menu.
 
 Once complete, you should have a window that will allow viewing some of the simulated values as well as the snapshot values (which should change when you click the snapshot button you created).
+
+## Hints
+
+Here are a few helpful Ignition-related hints to help you get started:
+
+* Within the *Property Editor*, by default, you can only see *Basic* properties.  Utilize the *Filter properties* selector to expand your view to *All* properties to reveal all possible configuration options.
+* You can drag tags from the *Tag Browser* to the chart components to add tags as an easier method to finding them from within the customizer.
+* You can drag container components around on your window if you hold down the *Alt* key while dragging.
 
 ## Submitting your Project
 

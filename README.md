@@ -4,7 +4,7 @@ This provides a simple set of exercises under the [Ignition](http://www.inductiv
 ## Prerequisites
 
 * VirtualBox
-  * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Downgrade to 5.1.14 for better operation.  VirtualBox[^1] and Vagrant[^2] are both tracking issues.
+  * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Version 5.1.18 fixes this issue.
 * Vagrant
 
 ## Getting Started
@@ -13,9 +13,9 @@ We're using [Vagrant](http://www.vagrantup.com) to handle the deployment of the 
 
 https://www.vagrantup.com/downloads.html
 
-You also need to have VirtualBox installed as the VM provider.  Get VirtualBox 5.1.14 here:
+You also need to have VirtualBox installed as the VM provider.  Get VirtualBox here:
 
-https://www.virtualbox.org/wiki/Download_Old_Builds_5_1
+https://www.virtualbox.org/wiki/Downloads
 
 ### Windows
 

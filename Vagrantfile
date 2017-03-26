@@ -89,9 +89,14 @@ Vagrant.configure("2") do |config|
   #
   # View the documentation for the provider you are using for more
   # information on available options.
-  config.vm.provider "virtualbox" do |vb|
     vb.linked_clone = true
     vb.memory = "2048"
+  end
+
+  config.vm.provider "parallels" do |prl, override|
+    override.vm.box = "parallels/ubuntu-16.04"
+    prl.linked_clone = true
+    prl.memory = 2048
   end
 
   # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies

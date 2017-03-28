@@ -48,9 +48,9 @@ Lets setup some framework elements for our evaluation:
 2. Remove the Ignition logo element and replace with the Evaluator Logo image:
    ![Evaluator Logo](images/evaluator_logo.png)
 
-3. Use the *Tab Strip Customizer* on the `Tabs` component to add a new tab called `Demo` for window we created above.
+3. Use the *Tab Strip Customizer* on the `Tabs` component to add a new tab called `Demo` for a demo window we'll create soon.
 
-   > It should be placed in between the `Overview` and `User Management` tabs
+   > It should be placed in between the `Overview` and `User Management` tabs.
 
 4. Save and close the `Navigation` window.
 
@@ -59,7 +59,7 @@ We need some tags in order to drive our displays, so lets create some:
 
 1. Bring up the OPC Browser against the internal `Ignition OPC-UA Server`.  Add the entire `Devices` folder to the tags in the default provider for the project by just dragging the folder onto the `Tags` folder in the *Tag Browser*.
 
-   > The bolded *Tags* folder in the *Tag Browser* represents the tag provider that has been configured as *Default* for this project.  You can see all of the providers (including the project default) in the *All Providers* folder.
+   > Note: The bolded *Tags* folder in the *Tag Browser* represents the tag provider that has been configured as *Default* for this project.  You can see all of the providers (including the project default) in the *All Providers* folder.
 
 2. Adjust the `Default Historical` scan class to utilize a faster *Slow Rate* of `1000`ms so our history capture will be a little speedier.
 

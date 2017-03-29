@@ -1,8 +1,8 @@
 # Evaluation Instructions
 
-Once you have your development environment setup and you can access the Ignition Gateway Webpage, you're ready to create your demo project and complete the evaluation!
+Once you have your development environment setup and you can access the Ignition Gateway Webpage, you're ready to create your demo project and complete the evaluation!  Take a peek at the **Hints** section below and don't forget to check the [Issues](https://github.com/kcollins-ene/evaluator/issues) section (and feel free to post there if needed) as well.
 
-We'll refer to a few constructs in the remainder of the guide:
+To get started, here are a few key terms:
 
 | Name                | Description                              |
 | ------------------- | ---------------------------------------- |
@@ -13,6 +13,8 @@ We'll refer to a few constructs in the remainder of the guide:
 | Designer            | Primary Application Development Environment for Ignition |
 | Project             | One or more projects can exist on an Ignition Gateway server |
 | Client              | Web-Launched Client for a given Ignition Project |
+
+
 
 ## Setting up Device and Database Connections
 
@@ -25,13 +27,7 @@ The *Gateway Status Page* should now reflect the new database connection and sim
 
 ![Database and Devices Created](images/database_and_devices_created.png)
 
-## Setting up Alarm Journaling and Project Auditing
 
-In order to make sure we can view some trended data from our simulated devices in our project, lets also setup our history connections:
-
-1. From the *Gateway Config Page*, configure a new Alarm Journal profile called `Journal` against our `ignition` database we created in the last section.
-
-2. Also create an Audit Profile called `Audit` within the `ignition` database as well.  Adjust the table name to be the lowercase `audit_events` for consistency with other Ignition default table names.
 
 ## Creating an Application
 
@@ -105,6 +101,8 @@ Now that we have some data, lets get started with our `Demo` window:
 
 Once complete, you should have a window that will allow viewing some of the simulated values as well as the snapshot values (which should change when you click the snapshot button you created).
 
+
+
 ## Hints
 
 Here are a few helpful Ignition-related hints to help you get started:
@@ -112,6 +110,8 @@ Here are a few helpful Ignition-related hints to help you get started:
 * Within the *Property Editor*, by default, you can only see *Basic* properties.  Utilize the *Filter properties* selector to expand your view to *All* properties to reveal all possible configuration options.
 * You can drag tags from the *Tag Browser* to the chart components to add tags as an easier method to finding them from within the customizer.
 * You can drag container components around on your window if you hold down the *Alt* key while dragging.
+
+
 
 ## Submitting your Project
 

@@ -6,6 +6,7 @@ This provides a simple set of exercises under the [Ignition](http://www.inductiv
 * VirtualBox
   * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Version 5.1.18 fixes this issue.
 * Vagrant
+* Java SE 6, 7, or 8 Runtime Environment (JRE)
 
 ## Getting Started
 
@@ -16,6 +17,10 @@ https://www.vagrantup.com/downloads.html
 You also need to have VirtualBox installed as the VM provider.  Get VirtualBox here:
 
 https://www.virtualbox.org/wiki/Downloads
+
+For the Java Runtime Environment, it is recommended you install Java 8 for your platform.  Get Java 8 JRE here:
+
+http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 ### Windows
 
@@ -31,6 +36,8 @@ Unpack the downloaded zip file, open a command prompt to the resulting location,
 
 ![Launching Vagrant](images/launching_vagrant.png)
 
+
+
 ### Linux / macOS
 
 First, open a terminal and clone this repository to your computer:
@@ -39,12 +46,16 @@ First, open a terminal and clone this repository to your computer:
 git clone https://github.com/kcollins-ene/evaluator.git
 ```
 
+> If you don't have `git` installed, you may get some additional output during this step.  macOS will typically prompt you to install the Xcode developer tools—once completed, you may need to re-run the `git` command above.
+
 Next, start the environment:
 
 ```shell
 cd evaluator
 vagrant up
 ```
+
+
 ### All
 
 Following the platform-specific steps above will create and provision an Ubuntu 16.04 development environment with Oracle Java8, MySQL, and Ignition 7.9.1 preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:

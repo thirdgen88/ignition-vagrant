@@ -26,11 +26,9 @@ http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.h
 
 ### Windows
 
-If you don't have a `git` client, install *Git for Windows* and get not only `git` but also `ssh` (and more):
-
-https://git-for-windows.github.io
-
 First, download the repository to your computer (if you have `git` installed, you can clone as well):
+> *Optional*: If you don't have a `git` client and want to be able to work with it, install *Git for Windows* 
+> and get not only `git` but also `ssh` (and more):  [Git for Windows](https://git-for-windows.github.io)
 
 ![Download from Github](images/download_from_github.png)
 

@@ -6,6 +6,8 @@ This provides a simple set of exercises under the [Ignition](http://www.inductiv
 * VirtualBox
   * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Version 5.1.18 fixes this issue.
 * Vagrant
+  * **WARNING**: Possible issue with Vagrant 1.9.4 (see issue [#4](https://github.com/kcollins-ene/evaluator/issues/4) and related links here for details), recommend 
+installing Vagrant 1.9.3 from the previous versions section of the Vagrant website: [Vagrant 1.9.3 Downloads](https://releases.hashicorp.com/vagrant/1.9.3/).
 * Java SE 6, 7, or 8 Runtime Environment (JRE)
 
 ## Getting Started

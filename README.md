@@ -7,7 +7,7 @@ This provides a simple set of exercises under the [Ignition](http://www.inductiv
   * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Version 5.1.18 fixes this issue.
 * Vagrant
   * **WARNING**: Possible issue with Vagrant 1.9.4 (see issue [#4](https://github.com/kcollins-ene/evaluator/issues/4) and related links here for details), recommend 
-installing Vagrant 1.9.3 from the previous versions section of the Vagrant website: [Vagrant 1.9.3 Downloads](https://releases.hashicorp.com/vagrant/1.9.3/).
+    installing at least Vagrant 1.9.5, where this issue is resolved.
 * Java SE 6, 7, or 8 Runtime Environment (JRE)
 
 ## Getting Started
@@ -58,7 +58,7 @@ vagrant up
 
 ### All
 
-Following the platform-specific steps above will create and provision an Ubuntu 16.04 development environment with Oracle Java8, MySQL, and Ignition 7.9.1 preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
+Following the platform-specific steps above will create and provision an Ubuntu 16.04 development environment with Oracle Java8, MySQL, and Ignition 7.9.3 preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
 
 http://localhost:8088
 

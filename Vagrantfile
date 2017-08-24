@@ -14,6 +14,7 @@ sudo dpkg-reconfigure debconf -f noninteractive -p critical
 echo "Setting up Package Caching"
 sudo apt-get install -y apt-cacher-ng >> install.log
 echo $'Acquire::http::Proxy \"http://localhost:3142\";' > /etc/apt/apt.conf.d/00aptproxy
+# Apply fix for Oracle Java via the cache - https://askubuntu.com/questions/195297/install-oracle-java7-installer-through-apt-cacher-ng
 sudo sed -i '$ a PfilePattern = .*(\\\\.d?deb|\\\\.rpm|\\\\.drpm|\\\\.dsc|\\\\.tar(\\\\.gz|\\\\.bz2|\\\\.lzma|\\\\.xz)(\\\\.gpg|\\\\?AuthParam=.*)?|\\\\.diff(\\\\.gz|\\\\.bz2|\\\\.lzma|\\\\.xz)|\\\\.jigdo|\\\\.template|changelog|copyright|\\\\.udeb|\\\\.debdelta|\\\\.diff/.*\\\\.gz|(Devel)?ReleaseAnnouncement(\\\\?.*)?|[a-f0-9]+-(susedata|updateinfo|primary|deltainfo).xml.gz|fonts/(final/)?[a-z]+32.exe(\\\\?download.*)?|/dists/.*/installer-[^/]+/[0-9][^/]+/images/.*)$' /etc/apt-cacher-ng/acng.conf
 sudo sed -i '$ a RequestAppendix: Cookie: oraclelicense=a' /etc/apt-cacher-ng/acng.conf
 sudo service apt-cacher-ng stop

@@ -35,11 +35,13 @@ sudo apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sudo sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition and install
-echo "Downloading Ignition 7.9.3"
-wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.3/20170602-1004/Ignition-7.9.3-linux-x64-installer.run >> install.log
-chmod a+x Ignition-7.9.3-linux-x64-installer.run
-echo "Installing Ignition 7.9.3"
-sudo ./Ignition-7.9.3-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
+if [ ! -f /vagrant/Ignition-7.9.4-linux-x64-installer.run ]; then
+  echo "Downloading Ignition 7.9.4"
+  wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.4/20170821-1531/Ignition-7.9.4-linux-x64-installer.run -O /vagrant/Ignition-7.9.4-linux-x64-installer.run >> install.log
+  chmod a+x /vagrant/Ignition-7.9.4-linux-x64-installer.run
+fi
+echo "Installing Ignition 7.9.4"
+sudo /vagrant/Ignition-7.9.4-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
 # Restore base gateway backup
 echo "Restoring Base Gateway Backup"
 sudo /usr/local/share/ignition/gwcmd.sh -s /vagrant/base-gateway.gwbk -y >> install.log

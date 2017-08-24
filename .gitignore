@@ -2,3 +2,5 @@
 ubuntu-xenial-16.04-cloudimg-console.log
 /database-backups
 /gateway-backups
+package-cache.tar
+Ignition-*-linux-x64-installer.run

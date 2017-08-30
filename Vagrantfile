@@ -49,9 +49,9 @@ sudo apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sudo sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
-if [ ! -f /vagrant/Ignition-7.9.4-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.4-linux-x64-installer.run | cut -c 1-32`" != "a927e8fef387948b6009302817bda262" ]; then
+if [ ! -f /vagrant/Ignition-7.9.4-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.4-linux-x64-installer.run | cut -c 1-32`" != "b60bc5173dd61cf0273a7394006328dd" ]; then
   echo "Downloading Ignition 7.9.4"
-  wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.4/20170821-1531/Ignition-7.9.4-linux-x64-installer.run -O /vagrant/Ignition-7.9.4-linux-x64-installer.run >> install.log
+  wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.4/20170829-1101/Ignition-7.9.4-linux-x64-installer.run -O /vagrant/Ignition-7.9.4-linux-x64-installer.run >> install.log
 else
   echo "Existing Installer Detected, Skipping Download"
 fi

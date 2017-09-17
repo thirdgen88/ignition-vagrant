@@ -39,9 +39,12 @@ echo "Installing MySQL"
 echo "mysql-server mysql-server/root_password select ignitionsql" | sudo debconf-set-selections
 echo "mysql-server mysql-server/root_password_again select ignitionsql" | sudo debconf-set-selections
 sudo apt-get install -y -q mysql-server >> install.log
+# Modify MySQL Default Configuration to utilize broader bind-to address and reload configuration
+sudo sed -i 's/^bind-address.*/bind-address = 0\.0\.0\.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo service mysql reload
 # Setup MySQL Username
 echo "Setting up 'ignition' database with 'ignition' user and password 'ignition'"
-mysql -u root --password=ignitionsql -e "CREATE USER 'ignition'@'localhost' IDENTIFIED BY 'ignition'; CREATE DATABASE ignition; GRANT ALL PRIVILEGES ON ignition.* to 'ignition'@'localhost';" >> install.log 2>&1
+mysql -u root --password=ignitionsql -e "CREATE USER 'ignition'@'%' IDENTIFIED BY 'ignition'; CREATE DATABASE ignition; GRANT ALL PRIVILEGES ON ignition.* to 'ignition'@'%';" >> install.log 2>&1
 # Enable Auto Backups
 echo "Enabling MySQL Auto-Backups"
 debconf-set-selections <<< "postfix postfix/mailname string ubuntu-xenial"

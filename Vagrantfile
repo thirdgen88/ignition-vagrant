@@ -41,7 +41,7 @@ echo "mysql-server mysql-server/root_password_again select ignitionsql" | sudo d
 sudo apt-get install -y -q mysql-server >> install.log
 # Modify MySQL Default Configuration to utilize broader bind-to address and reload configuration
 sudo sed -i 's/^bind-address.*/bind-address = 0\.0\.0\.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
-sudo service mysql reload
+sudo service mysql restart
 # Setup MySQL Username
 echo "Setting up 'ignition' database with 'ignition' user and password 'ignition'"
 mysql -u root --password=ignitionsql -e "CREATE USER 'ignition'@'%' IDENTIFIED BY 'ignition'; CREATE DATABASE ignition; GRANT ALL PRIVILEGES ON ignition.* to 'ignition'@'%';" >> install.log 2>&1

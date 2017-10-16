@@ -10,6 +10,8 @@ export DEBIAN_FRONTEND=noninteractive
 sudo sed -i 's/^mesg n/tty -s \\&\\& mesg n/g' /root/.profile
 sudo ex +"%s@DPkg@//DPkg" -cwq /etc/apt/apt.conf.d/70debconf
 sudo dpkg-reconfigure debconf -f noninteractive -p critical
+# Update Apt Repositories
+sudo apt-get update >> install.log
 # Setup Apt Cacher NG
 echo "Setting up Package Caching"
 sudo apt-get install -y apt-cacher-ng >> install.log

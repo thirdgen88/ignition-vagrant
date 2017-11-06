@@ -64,9 +64,18 @@ fi
 echo "Installing Ignition 7.9.4"
 chmod a+x /vagrant/Ignition-7.9.4-linux-x64-installer.run
 sudo /vagrant/Ignition-7.9.4-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
-# Restore base gateway backup
-echo "Restoring Base Gateway Backup"
-sudo /usr/local/share/ignition/gwcmd.sh -s /vagrant/base-gateway.gwbk -y >> install.log
+# Restore base gateway backup (if present)
+if [ -f /vagrant/base-gateway.gwbk ]; then
+  echo "Restoring Base Gateway Backup"
+  sudo /usr/local/share/ignition/gwcmd.sh -s /vagrant/base-gateway.gwbk -y >> install.log
+fi
+# Enable Module Debugging
+sudo sed -r -i 's/^#wrapper\\.java\\.additional\\.([0-9]{1,})=-Xdebug/wrapper.java.additional.\\1=-Xdebug/' /var/lib/ignition/data/ignition.conf
+sudo sed -r -i 's/^#wrapper\\.java\\.additional\\.([0-9]{1,})=-Xrunjdwp(.*)/wrapper.java.additional.\\1=-Xrunjdwp\\2/' /var/lib/ignition/data/ignition.conf
+# Allow unsigned modules
+sudo sed -r -i 's/^wrapper\\.java\\.additional\\.6.*/&\\nwrapper.java.additional.7=-Dia.developer.moduleupload=true/' /var/lib/ignition/data/ignition.conf
+sudo sed -r -i 's/^wrapper\\.java\\.additional\\.7.*/&\\nwrapper.java.additional.8=-Dignition.allowunsignedmodules=true/' /var/lib/ignition/data/ignition.conf
+# Start Ignition
 echo "Starting Ignition"
 sudo systemctl start ignition.service
 # Preserve Package Caches - Note that simply using a shared folder connection for the apt-cacher-ng service breaks it, so this is the alternative.
@@ -97,8 +106,13 @@ Vagrant.configure("2") do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
+
+  # Ignition
   config.vm.network "forwarded_port", guest: 8088, host: 8088, host_ip: "127.0.0.1"
+  # MySQL
   config.vm.network "forwarded_port", guest: 3306, host: 3306, host_ip: "127.0.0.1"
+  # Ignition Debugging
+  config.vm.network "forwarded_port", guest: 8000, host: 8000, host_ip: "127.0.0.1"
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.

@@ -4,10 +4,7 @@ This repository utilizes Vagrant to fully setup and provision an isolated Igniti
 ## Prerequisites
 
 * VirtualBox
-  * **WARNING**: VirtualBox 5.1.16 has a known regression that breaks mounting of Shared Folders from Vagrant and will cause the provisioning to fail.  Version 5.1.18 fixes this issue.
 * Vagrant
-  * **WARNING**: Possible issue with Vagrant 1.9.4 (see issue [#4](https://github.com/kcollins-ene/evaluator/issues/4) and related links here for details), recommend 
-    installing at least Vagrant 1.9.5, where this issue is resolved.
 * Java SE 6, 7, or 8 Runtime Environment (JRE)
 
 ## Getting Started
@@ -75,10 +72,3 @@ vagrant halt
 ```
 
 This will shutdown the virtual machine and release the network port configuration that was setup on launch.
-
-
-
-
-[^1]: VirtualBox 5.1.16 Regression: https://www.virtualbox.org/ticket/14651
-
-[^2]: Vagrant Shared Folder / Extended Path Issue: https://github.com/mitchellh/vagrant/issues/8352

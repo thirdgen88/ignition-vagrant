@@ -55,15 +55,15 @@ sudo apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sudo sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
-if [ ! -f /vagrant/Ignition-7.9.7-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.7-linux-x64-installer.run | cut -c 1-32`" != "8e933f166cf324463b195b5a1f4bff01" ]; then
-  echo "Downloading Ignition 7.9.7"
-  wget -q https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.7/20180329-1416/Ignition-7.9.7-linux-x64-installer.run -O /vagrant/Ignition-7.9.7-linux-x64-installer.run >> install.log
+if [ ! -f /vagrant/Ignition-7.9.8-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.8-linux-x64-installer.run | cut -c 1-32`" != "92b3fd4de27ea95cdf75f6f91fb813b2" ]; then
+  echo "Downloading Ignition 7.9.8"
+  wget -q http://files.inductiveautomation.com/release/ia/build7.9.8/20180531-1346/Ignition-7.9.8-linux-x64-installer.run -O /vagrant/Ignition-7.9.8-linux-x64-installer.run >> install.log
 else
   echo "Existing Installer Detected, Skipping Download"
 fi
-echo "Installing Ignition 7.9.7"
-chmod a+x /vagrant/Ignition-7.9.7-linux-x64-installer.run
-sudo /vagrant/Ignition-7.9.7-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
+echo "Installing Ignition 7.9.8"
+chmod a+x /vagrant/Ignition-7.9.8-linux-x64-installer.run
+sudo /vagrant/Ignition-7.9.8-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
 # Restore base gateway backup (if present)
 if [ -f /vagrant/base-gateway.gwbk ]; then
   echo "Restoring Base Gateway Backup"
@@ -90,8 +90,8 @@ SCRIPT
 # backwards compatibility). Please don't change it unless you know what
 # you're doing.
 Vagrant.configure("2") do |config|
-  # Ubuntu 16.04 (Xenial Xerus) Box Configuration
-  config.vm.box = "ubuntu/xenial64"
+  # Ubuntu 18.04 (Bionic Beaver) Box Configuration
+  config.vm.box = "ubuntu/bionic64"
 
   # Ignition
   config.vm.network "forwarded_port", guest: 8088, host: 8088, host_ip: "127.0.0.1"
@@ -105,15 +105,15 @@ Vagrant.configure("2") do |config|
     vb.linked_clone = true
     vb.memory = "2048"
   end
-
+  
   config.vm.provider "vmware_fusion" do |vm, override|
-    override.vm.box = "bento/ubuntu-16.04"
+    override.vm.box = "bento/ubuntu-18.04"
     vm.linked_clone = true
     vm.vmx["memsize"] = "2048"
   end
 
   config.vm.provider "vmware_workstation" do |vm, override|
-    override.vm.box = "bento/ubuntu-16.04"
+    override.vm.box = "bento/ubuntu-18.04"
     vm.linked_clone = true
     vm.vmx["memsize"] = "2048"
   end

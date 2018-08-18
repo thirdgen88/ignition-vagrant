@@ -55,15 +55,15 @@ sudo apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sudo sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
-if [ ! -f /vagrant/Ignition-7.9.8-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.8-linux-x64-installer.run | cut -c 1-32`" != "ffbbf12b3080d8b9d74622fb87c22ca0" ]; then
-  echo "Downloading Ignition 7.9.8"
-  wget -q http://files.inductiveautomation.com/release/ia/build7.9.8/20180607-1450/Ignition-7.9.8-linux-x64-installer.run -O /vagrant/Ignition-7.9.8-linux-x64-installer.run >> install.log
+if [ ! -f /vagrant/Ignition-7.9.9-linux-x64-installer.run ] || [ "`md5sum /vagrant/Ignition-7.9.9-linux-x64-installer.run | cut -c 1-32`" != "c714d81f2eeb8ad156754732d3345b49" ]; then
+  echo "Downloading Ignition 7.9.9"
+  wget -q --referer https://inductiveautomation.com/* https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.9/20180816-1452/Ignition-7.9.9-linux-x64-installer.run -O /vagrant/Ignition-7.9.9-linux-x64-installer.run >> install.log
 else
   echo "Existing Installer Detected, Skipping Download"
 fi
-echo "Installing Ignition 7.9.8"
-chmod a+x /vagrant/Ignition-7.9.8-linux-x64-installer.run
-sudo /vagrant/Ignition-7.9.8-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
+echo "Installing Ignition 7.9.9"
+chmod a+x /vagrant/Ignition-7.9.9-linux-x64-installer.run
+sudo /vagrant/Ignition-7.9.9-linux-x64-installer.run --unattendedmodeui none --mode unattended --prefix /usr/local/share/ignition >> install.log
 # Restore base gateway backup (if present)
 if [ -f /vagrant/base-gateway.gwbk ]; then
   echo "Restoring Base Gateway Backup"

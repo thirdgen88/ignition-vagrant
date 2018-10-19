@@ -3,4 +3,4 @@ ubuntu-*-cloudimg-console.log
 /database-backups
 /gateway-backups
 package-cache.tar
-Ignition-*-linux-x64-installer.run
+Ignition-*linux-x64-installer.run

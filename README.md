@@ -55,7 +55,7 @@ vagrant up
 
 ### All
 
-Following the platform-specific steps above will create and provision an Ubuntu 16.04 development environment with Oracle Java8, MySQL, and Ignition preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
+Following the platform-specific steps above will create and provision an Ubuntu 18.04 development environment with OpenJDK 8 JRE, MySQL, and Ignition preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
 
 http://localhost:8088
 

@@ -6,8 +6,9 @@ MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-ignitionsql}
 MYSQL_DATABASE=${MYSQL_DATABASE:-ignition}
 MYSQL_USER=${MYSQL_USER:-ignition}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:-ignition}
-IGNITION_VERSION="7.9.9"
-IGNITION_DOWNLOAD_URL="https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.9/20180816-1452/Ignition-7.9.9-linux-x64-installer.run"
+IGNITION_VERSION="7.9.10"
+IGNITION_DOWNLOAD_URL="https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.10/20181128-1303/zip-installers/Ignition-7.9.10-linux-x64-installer.run"
+IGNITION_DOWNLOAD_MD5="414dae5fb8ccfa94e74cd11730c45aeb"
 IGNITION_INSTALLER_NAME="Ignition-${IGNITION_VERSION}-linux-x64-installer.run"
 IGNITION_STARTUP_DELAY=${IGNITION_STARTUP_DELAY:-90}
 
@@ -62,7 +63,7 @@ apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
-if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`md5sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-32`" != "c714d81f2eeb8ad156754732d3345b49" ]; then
+if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`md5sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-32`" != ${IGNITION_DOWNLOAD_MD5} ]; then
   echo "Downloading Ignition ${IGNITION_VERSION}"
   wget -q --referer https://inductiveautomation.com/* ${IGNITION_DOWNLOAD_URL} -O /vagrant/${IGNITION_INSTALLER_NAME} >> install.log
 else

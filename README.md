@@ -1,6 +1,6 @@
 # Ignition Vagrant Development Environment
 
-![Ignition 7.9.10](https://img.shields.io/badge/ignition-7.9.10-green.svg)
+![Ignition 8.0.0](https://img.shields.io/badge/ignition-8.0.0-green.svg)
 
 This repository utilizes Vagrant to fully setup and provision an isolated Ignition development system to get up and running quickly!
 
@@ -8,7 +8,6 @@ This repository utilizes Vagrant to fully setup and provision an isolated Igniti
 
 * VirtualBox
 * Vagrant
-* Java SE 6, 7, or 8 Runtime Environment (JRE)
 
 ## Getting Started
 
@@ -19,10 +18,6 @@ https://www.vagrantup.com/downloads.html
 You also need to have VirtualBox installed as the VM provider.  Get VirtualBox here:
 
 https://www.virtualbox.org/wiki/Downloads
-
-For the Java Runtime Environment, it is recommended you install Java 8 for your platform.  Get Java 8 JRE here:
-
-http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html
 
 ### Windows
 
@@ -58,7 +53,7 @@ vagrant up
 
 ### All
 
-Following the platform-specific steps above will create and provision an Ubuntu 18.04 development environment with OpenJDK 8 JRE, MySQL, and Ignition preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
+Following the platform-specific steps above will create and provision an Ubuntu 18.04 development environment with MySQL and Ignition preinstalled.  Next, simply launch a web browser against the forwarded port on your local computer:
 
 http://localhost:8088
 

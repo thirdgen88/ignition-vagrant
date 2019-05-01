@@ -1,4 +1,6 @@
 #!/bin/bash
+set -eo pipefail
+shopt -s nullglob
 
 # Inherit incoming or set defaults for environment variables.
 # The values for these can be driven by the provisioning section of the Vagrantfile
@@ -6,11 +8,71 @@ MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-ignitionsql}
 MYSQL_DATABASE=${MYSQL_DATABASE:-ignition}
 MYSQL_USER=${MYSQL_USER:-ignition}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:-ignition}
-IGNITION_VERSION="7.9.10"
-IGNITION_DOWNLOAD_URL="https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build7.9.10/20181128-1303/zip-installers/Ignition-7.9.10-linux-x64-installer.run"
-IGNITION_DOWNLOAD_MD5="414dae5fb8ccfa94e74cd11730c45aeb"
+IGNITION_VERSION="8.0.0"
+IGNITION_DOWNLOAD_URL="https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build8.0.0/20190407-1858/zip-installers/Ignition-8.0.0-linux-x64-installer.run"
+IGNITION_DOWNLOAD_SHA256="cba0f85b59ab5ff8e0a3359074e76613c91a8f83b9f9a6dabc4bd7e150c20045"
 IGNITION_INSTALLER_NAME="Ignition-${IGNITION_VERSION}-linux-x64-installer.run"
 IGNITION_STARTUP_DELAY=${IGNITION_STARTUP_DELAY:-90}
+GATEWAY_ADMIN_USERNAME=${GATEWAY_ADMIN_USERNAME:-admin}
+
+if [ -z "$GATEWAY_ADMIN_PASSWORD" -a -z "$GATEWAY_RANDOM_ADMIN_PASSWORD" ]; then
+    echo >&2 'ERROR: Gateway is not initialized and no password option is specified '
+    echo >&2 '  You need to specify either GATEWAY_ADMIN_PASSWORD or GATEWAY_RANDOM_ADMIN_PASSWORD'
+    exit 1
+fi
+
+# usage: perform_commissioning URL START_FLAG
+#   ie: perform_commissioning http://localhost:8088/post-step 1
+perform_commissioning() {
+    local url="$1"
+
+    # Register EULA Acceptance
+    local license_accept_payload='{"id":"license","step":"eula","data":{"accept":true}}'
+    curl -H "Content-Type: application/json" -d "${license_accept_payload}" ${url} > /dev/null 2>&1
+
+    # Register Authentication Details
+    local auth_user="${GATEWAY_ADMIN_USERNAME:=admin}"
+    local auth_salt=$(date +%s | sha256sum | head -c 8)
+    local auth_pwhash=$(echo -en ${GATEWAY_ADMIN_PASSWORD}${auth_salt} | sha256sum - | cut -c -64)
+    local auth_password="[${auth_salt}]${auth_pwhash}"
+    local auth_payload='{"id":"authentication","step":"authSetup","data":{"username":"'${auth_user}'","password":"'${auth_password}'"}}'
+    curl -H "Content-Type: application/json" -d "${auth_payload}" ${url} > /dev/null 2>&1
+
+    # Register Port Configuration
+    local http_port="${GATEWAY_HTTP_PORT:=8088}"
+    local https_port="${GATEWAY_HTTPS_PORT:=8043}"
+    local use_ssl="${GATEWAY_USESSL:=false}"
+    local port_payload='{"id":"connections","step":"connections","data":{"http":'${http_port}',"https":'${https_port}',"useSSL":'${use_ssl}'}}'
+    curl -H "Content-Type: application/json" -d "${port_payload}" ${url} > /dev/null 2>&1
+
+    # Finalize
+    if [ "$2" = "1" ]; then
+        local start_flag="true"
+    else
+        local start_flag="false"
+    fi
+    local finalize_payload='{"id":"finished","data":{"start":'${start_flag}'}}'
+    curl -H "Content-Type: application/json" -d "${finalize_payload}" ${url} > /dev/null 2>&1
+}
+
+# usage: health_check PHASE_DESC DELAY_SECS
+#   ie: health_check "Gateway Commissioning" 60
+health_check() {
+    local phase="$1"
+    local delay=$2
+
+    # Wait for a short period for the commissioning servlet to come alive
+    for ((i=${delay};i>0;i--)); do
+        if curl -f http://localhost:8088/StatusPing 2>&1 | grep -c RUNNING > /dev/null; then   
+            break
+        fi
+        sleep 1
+    done
+    if [ "$i" -le 0 ]; then
+        echo >&2 "Failed to detect RUNNING status during ${phase} after ${delay} delay."
+        exit 1
+    fi
+}
 
 # Initialize install log
 rm -f install.log && touch install.log && chown vagrant.vagrant install.log
@@ -35,10 +97,8 @@ if [ -f /vagrant/package-cache.tar ]; then
 fi
 echo "Starting Package Caching"
 service apt-cacher-ng start
-# Add OpenJDK 8 JRE
-echo "Installing OpenJDK 8 Java Runtime Environment"
-apt-get -y install openjdk-8-jre-headless >> install.log
-sed -r -i 's/^(assistive_technologies)/#\1/' /etc/java-8-openjdk/accessibility.properties
+# Install some prerequisite packages
+apt-get install -y curl pwgen >> install.log
 # Setup MySQL Setup and install mysql-server
 echo "Installing MySQL Database"
 echo "mysql-server mysql-server/root_password select ${MYSQL_ROOT_PASSWORD}" | debconf-set-selections
@@ -50,7 +110,9 @@ service mysql restart
 # Setup MySQL Username and Client Auth
 sh -c 'echo "[client]\nuser=root\npassword=${MYSQL_ROOT_PASSWORD}\n"' > ~/.my.cnf
 chmod 600 ~/.my.cnf
-echo "Setting up '${MYSQL_DATABASE}' database with '${MYSQL_USER}' user and password '${MYSQL_PASSWORD}'"
+echo "  MYSQL_DATABASE: ${MYSQL_DATABASE}"
+echo "  MYSQL_USER: ${MYSQL_USER}"
+echo "  MYSQL_PASSWORD: ${MYSQL_PASSWORD}"
 mysql -e "CREATE USER '${MYSQL_USER}'@'%' IDENTIFIED BY '${MYSQL_PASSWORD}'; CREATE DATABASE ${MYSQL_DATABASE}; GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* to '${MYSQL_USER}'@'%';" >> install.log 2>&1
 sh -c 'echo "[client]\nuser=${MYSQL_USER}\npassword=${MYSQL_PASSWORD}\n"' > /home/vagrant/.my.cnf
 chmod 600 /home/vagrant/.my.cnf
@@ -63,7 +125,7 @@ apt-get install -y automysqlbackup >> install.log
 # Redirect MySQL backups to Vagrant share folder
 sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/automysqlbackup
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
-if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`md5sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-32`" != ${IGNITION_DOWNLOAD_MD5} ]; then
+if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`sha256sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-64`" != ${IGNITION_DOWNLOAD_SHA256} ]; then
   echo "Downloading Ignition ${IGNITION_VERSION}"
   wget -q --referer https://inductiveautomation.com/* ${IGNITION_DOWNLOAD_URL} -O /vagrant/${IGNITION_INSTALLER_NAME} >> install.log
 else
@@ -76,28 +138,39 @@ chmod a+x /vagrant/${IGNITION_INSTALLER_NAME}
 sed -r -i 's/^#wrapper\.java\.additional\.([0-9]{1,})=-Xdebug/wrapper.java.additional.\1=-Xdebug/' /var/lib/ignition/data/ignition.conf
 sed -r -i 's/^#wrapper\.java\.additional\.([0-9]{1,})=-Xrunjdwp(.*)/wrapper.java.additional.\1=-Xrunjdwp\2/' /var/lib/ignition/data/ignition.conf
 # Allow unsigned modules
-sed -r -i 's/^wrapper\.java\.additional\.6.*/&\nwrapper.java.additional.7=-Dia.developer.moduleupload=true/' /var/lib/ignition/data/ignition.conf
-sed -r -i 's/^wrapper\.java\.additional\.7.*/&\nwrapper.java.additional.8=-Dignition.allowunsignedmodules=true/' /var/lib/ignition/data/ignition.conf
+sed -r -i 's/^wrapper\.java\.additional\.3.*/&\nwrapper.java.additional.4=-Dia.developer.moduleupload=true/' /var/lib/ignition/data/ignition.conf
+sed -r -i 's/^wrapper\.java\.additional\.4.*/&\nwrapper.java.additional.5=-Dignition.allowunsignedmodules=true/' /var/lib/ignition/data/ignition.conf
+# Generate Ignition Gateway Random Password if directed
+if [ ! -z "$GATEWAY_RANDOM_ADMIN_PASSWORD" ]; then
+    export GATEWAY_ADMIN_PASSWORD="$(pwgen -1 32)"
+fi
 # Start Ignition
 echo "Starting Ignition"
 systemctl start ignition.service
+# Perform System Commissioning
+echo "Performing commissioning actions..."
+perform_commissioning http://localhost:8088/post-step 1
 # Restore base gateway backup (if present)
 if [ -f /vagrant/base-gateway.gwbk ]; then
+  sleep 5
   echo "Waiting for Gateway Startup to Restore Gateway Backup"
-  for ((i=${IGNITION_STARTUP_DELAY:-120};i>0;i--)); do
-      if curl -f http://localhost:8088/main/StatusPing 2>&1 | grep -c RUNNING > /dev/null; then
-          break
-      fi
-      sleep 1
-  done
-  if [ "$i" -le 0 ]; then
-      echo >&2 "Ignition initialization process failed."
-      exit 1
-  fi
+  health_check "Startup" ${IGNITION_STARTUP_DELAY:=120}
   
   echo "Restoring Base Gateway Backup"
-  /usr/local/share/ignition/gwcmd.sh -s /vagrant/base-gateway.gwbk -y >> install.log
+  printf '\n' | /usr/local/share/ignition/gwcmd.sh --restore /vagrant/base-gateway.gwbk -y >> install.log
+
+  health_check "Restore" ${IGNITION_STARTUP_DELAY}
+  /usr/local/share/ignition/gwcmd.sh -p >> install.log
+  systemctl restart ignition.service
+  health_check "Recommissioning" 10
+  echo "Resetting Gateway Credentials"
+  perform_commissioning http://localhost:8088/post-step 1
 fi
+# Output Credentials
+echo "  GATEWAY_ADMIN_USERNAME: ${GATEWAY_ADMIN_USERNAME}"
+if [ ! -z "$GATEWAY_RANDOM_ADMIN_PASSWORD" ]; then echo "  GATEWAY_RANDOM_ADMIN_PASSWORD: ${GATEWAY_ADMIN_PASSWORD}"; fi
+echo "  GATEWAY_HTTP_PORT: ${GATEWAY_HTTP_PORT}"
+echo "  GATEWAY_HTTPS_PORT: ${GATEWAY_HTTPS_PORT}"
 # Preserve Package Caches - Note that simply using a shared folder connection for the apt-cacher-ng service breaks it, so this is the alternative.
 echo "Preserving Package Caches"
 pushd /var/cache/apt-cacher-ng >> install.log

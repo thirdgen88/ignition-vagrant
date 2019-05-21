@@ -127,7 +127,7 @@ sed -i 's#^BACKUPDIR=.*#BACKUPDIR=/vagrant/database-backups#' /etc/default/autom
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
 if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`sha256sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-64`" != ${IGNITION_DOWNLOAD_SHA256} ]; then
   echo "Downloading Ignition ${IGNITION_VERSION}"
-  wget -q --referer https://inductiveautomation.com/* ${IGNITION_DOWNLOAD_URL} -O /vagrant/${IGNITION_INSTALLER_NAME} >> install.log
+  wget -q --referer "https://inductiveautomation.com/*" ${IGNITION_DOWNLOAD_URL} -O /vagrant/${IGNITION_INSTALLER_NAME} >> install.log
 else
   echo "Existing Installer Detected, Skipping Download"
 fi

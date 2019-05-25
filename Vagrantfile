@@ -10,6 +10,9 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
   config.vm.hostname = "ignition-vagrant"
 
+  # Initialize Provisioning
+  config.vm.provision "initialize", type: "shell", path: "initialize.sh"
+
   # Ignition
   config.vm.network "forwarded_port", guest: 8088, host: 8088, host_ip: "127.0.0.1"
   # MySQL
@@ -40,14 +43,17 @@ Vagrant.configure("2") do |config|
 
   # Enable provisioning with a series of bash shell scripts. 
   config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  config.vm.provision "install", type: "shell", path: "install.sh", env: {
-    "GATEWAY_ADMIN_USERNAME" => "admin",
-    #"GATEWAY_ADMIN_PASSWORD" => "password",  # define a password for commissioning here ...
-    "GATEWAY_RANDOM_ADMIN_PASSWORD" => "1",  # ... or have a random password generated on startup
+    config.vm.provision "install-mysql", type: "shell", path: "install-mysql.sh", env: {
     "MYSQL_ROOT_PASSWORD" => "ignitionsql",
     "MYSQL_DATABASE" => "ignition",
     "MYSQL_USER" => "ignition",
     "MYSQL_PASSWORD" => "ignition"
   }
+  config.vm.provision "install-ignition", type: "shell", path: "install-ignition.sh", env: {
+    "GATEWAY_ADMIN_USERNAME" => "admin",
+    #"GATEWAY_ADMIN_PASSWORD" => "password",  # define a password for commissioning here ...
+    "GATEWAY_RANDOM_ADMIN_PASSWORD" => "1"  # ... or have a random password generated on startup
+  }
   config.vm.provision "provision-mysql", type: "shell", path: "provision-mysql.sh"
+  config.vm.provision "finalize", type: "shell", path: "finalize.sh"
 end

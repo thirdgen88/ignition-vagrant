@@ -4,9 +4,9 @@ shopt -s nullglob
 
 # Inherit incoming or set defaults for environment variables.
 # The values for these can be driven by the provisioning section of the Vagrantfile
-IGNITION_VERSION="8.0.1"
-IGNITION_DOWNLOAD_URL="https://s3.amazonaws.com/files.inductiveautomation.com/release/ia/build8.0.1/20190507-0808/Ignition-8.0.1-linux-x64-installer.run"
-IGNITION_DOWNLOAD_SHA256="86ae914b6b2d366319a3fb01bc1ea9c14213383c59d34c38d36b1dba3b531787"
+IGNITION_VERSION="8.0.2"
+IGNITION_DOWNLOAD_URL="https://files.inductiveautomation.com/release/ia/build8.0.2/20190605-1127/Ignition-8.0.2-linux-x64-installer.run"
+IGNITION_DOWNLOAD_SHA256="101aee71febf0f306bb5889ed5cca9d1836fd140e2379f9723dd161646ddae2e"
 IGNITION_INSTALLER_NAME="Ignition-${IGNITION_VERSION}-linux-x64-installer.run"
 IGNITION_STARTUP_DELAY=${IGNITION_STARTUP_DELAY:-90}
 GATEWAY_ADMIN_USERNAME=${GATEWAY_ADMIN_USERNAME:-admin}

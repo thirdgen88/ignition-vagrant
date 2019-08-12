@@ -8,6 +8,7 @@
 Vagrant.configure("2") do |config|
   # Ubuntu 18.04 (Bionic Beaver) Box Configuration
   config.vm.box = "ubuntu/bionic64"
+  config.vm.define "ignition"
   config.vm.hostname = "ignition-vagrant"
 
   # Initialize Provisioning
@@ -55,5 +56,7 @@ Vagrant.configure("2") do |config|
     "GATEWAY_RANDOM_ADMIN_PASSWORD" => "1"  # ... or have a random password generated on startup
   }
   config.vm.provision "provision-mysql", type: "shell", path: "provision-mysql.sh"
-  config.vm.provision "finalize", type: "shell", path: "finalize.sh"
+  config.vm.provision "finalize", type: "shell", path: "finalize.sh", env: {
+    "SET_TIMEZONE" => "US/Central"  # US/Pacific, US/Mountain, US/Central, US/Eastern, etc
+  }
 end

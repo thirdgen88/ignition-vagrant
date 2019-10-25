@@ -69,8 +69,8 @@ health_check() {
         exit 1
     fi
 }
-
 # Install some prerequisite packages
+echo "Installing some prerequisite packages"
 apt-get install -y curl pwgen >> install.log
 # Download Ignition if the installer is not already present (or if md5sum doesn't match)
 if [ ! -f /vagrant/${IGNITION_INSTALLER_NAME} ] || [ "`sha256sum /vagrant/${IGNITION_INSTALLER_NAME} | cut -c 1-64`" != ${IGNITION_DOWNLOAD_SHA256} ]; then

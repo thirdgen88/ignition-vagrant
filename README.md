@@ -1,6 +1,6 @@
 # Ignition Vagrant Development Environment
 
-![Ignition 8.0.8](https://img.shields.io/badge/ignition-8.0.8-green.svg)
+![Ignition 8.0.9](https://img.shields.io/badge/ignition-8.0.9-green.svg)
 
 This repository utilizes Vagrant to fully setup and provision an isolated Ignition development system to get up and running quickly!
 
